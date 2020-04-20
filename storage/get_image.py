@@ -21,7 +21,7 @@ storage = firebase.storage()
 
 # storage.child("image/new.jpg").put("image.jpg")
 
-img_name = 'coff.PNG'
+img_name = 'image_300.PNG'
 storage.child(img_name).download(img_name)
 
 # url = storage.child("login.png").get_url(None)

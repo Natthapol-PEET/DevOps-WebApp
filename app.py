@@ -24,5 +24,9 @@ def get_login():
 
     return render_template('show.html', text=text)
 
+@app.route('/invoice')
+def invoice():
+    return render_template('invoice.html')
+
 if __name__== "__main__":
     app.run(debug=True)
