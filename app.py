@@ -28,5 +28,22 @@ def get_login():
 def invoice():
     return render_template('invoice.html')
 
+@app.route('/summary')
+def summary():
+    values = [['coffee', 20, 30], ['Fresh milk', 40, 50], ['Latte', 40, 50]]
+    sum = ["summary", 9, 215]
+
+    return render_template('summary.html', data=values, sum=sum)
+
+@app.route('/summary', methods=['POST'])
+def get_summary():
+
+    birthday = request.form['birthday']
+
+    values = [['coffee', 1, 1], ['Fresh milk', 40, 50], ['Latte', 40, 50]]
+    sum = ["summary", 9, 215]
+
+    return render_template('summary.html', data=values, sum=sum, birthday=str(type(birthday)) + str(birthday))
+
 if __name__== "__main__":
     app.run(debug=True)
