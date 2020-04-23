@@ -68,7 +68,7 @@ body {
 
     #header { height: 15px; width: 100%; margin: 20px 0; background: #222; text-align: center; color: white; font: bold 15px Helvetica, Sans-Serif; text-decoration: uppercase; letter-spacing: 20px; padding: 8px 0px; }
 
-    #address { width: 350px; height: 150px; float: left; font-size: 18px;}
+    #address { width: 600px; height: 150px; float: left; font-size: 18px;}
     #customer { overflow: hidden; }
 
     #logo { text-align: right; float: right; position: relative; margin-top: 25px; border: 1px solid #fff; max-width: 540px; max-height: 100px; overflow: hidden; }
@@ -115,12 +115,13 @@ body {
 
 <div id="page-wrap">
 		<h1 id="header">INVOICE</h1>
-            <style>span.t{ padding-left: 5.5em }</style>
+            <style>span.t{ padding-left: 6.3em }</style>
             <p id="address">
-                <span class="bbb">Customer: &nbsp;</span>  Mr.Nonthasri  Nonthasri
-                <span class="bbb">Address: &nbsp;&nbsp;</span> 83/3 บ้านกุดขนวน ต.บุ่งแก้ว
-                <br> <span class="t"></span> อ.โนนสะอาด จ.อุดรธานี 41240
-                <br> <span class="t"></span> เบอร์โทร 093-1851721
+                <span class="bbb">Customer: &nbsp;</span>  {{customer_address[0]}} <br>
+                <span class="bbb">Address: &nbsp;&nbsp;</span> {{customer_address[1]}}
+                <br> <span class="t"></span> {{customer_address[2]}}
+                <br> <span class="t"></span> {{customer_address[3]}}
+                <br> <span class="t"></span> Phone number: {{customer_address[4]}}
             </p>
             <div id="logo">
                 <img id="image" src="static/images/image_300.PNG" alt="logo" />
@@ -134,18 +135,20 @@ body {
                 <span class="bbb">Tax ID: &nbsp;</span> 6040202424xxxx
             </p>
 
+
+
             <table id="meta">
                 <tr>
                     <td class="meta-head">Invoice #</td>
-                    <td>000123</td>
+                    <td>{{META[0]}}</td>
                 </tr>
                 <tr>
                     <td class="meta-head">Date</td>
-                    <td>December 15, 2009</td>
+                    <td>{{META[1]}}</td>
                 </tr>
                 <tr>
                     <td class="meta-head">Amount Due</td>
-                    <td>$875.00</td>
+                    <td>${{META[2]}}</td>
                 </tr>
             </table>
 		</div>
@@ -159,45 +162,15 @@ body {
 		      <th>Price</th>
 		  </tr>
 
-		  <tr class="item-row">
-		      <td class="item-name">Web Updates </td>
-		      <td class="description"> Monthly web updates for http://widgetcorp.com (Nov. 1 - Nov. 30, 2009) </td>
-		      <td class="cent">$650.00</td>
-		      <td class="cent">1</td>
-		      <td class="cent">$650.00</td>
-		  </tr>
-
-		  <tr class="item-row">
-            <td class="item-name">SSL Renewals</td>
-		      <td class="description"><p>Yearly renewals of SSL certificates on main domain and several subdomains</p></td>
-		      <td class="cent">$75.00</td>
-		      <td class="cent">3</td>
-		      <td class="cent">$225.00</td>
-		  </tr>
-
+      {% for x in list_data %}
       <tr class="item-row">
-            <td class="item-name">SSL Renewals</td>
-		      <td class="description"><p>Yearly renewals of SSL certificates on main domain and several subdomains</p></td>
-		      <td class="cent">$75.00</td>
-		      <td class="cent">3</td>
-		      <td class="cent">$225.00</td>
+          <td class="item-name"> {{x[0]}} </td>
+		      <td class="description"><p> {{x[1]}} </p></td>
+		      <td class="cent">${{x[2]}} </td>
+		      <td class="cent"> {{x[3]}} </td>
+		      <td class="cent">${{x[4]}} </td>
 		  </tr>
-
-      <tr class="item-row">
-            <td class="item-name">SSL Renewals</td>
-		      <td class="description"><p>Yearly renewals of SSL certificates on main domain and several subdomains</p></td>
-		      <td class="cent">$75.00</td>
-		      <td class="cent">3</td>
-		      <td class="cent">$225.00</td>
-		  </tr>
-
-      <tr class="item-row">
-            <td class="item-name">SSL Renewals</td>
-		      <td class="description"><p>Yearly renewals of SSL certificates on main domain and several subdomains</p></td>
-		      <td class="cent">$75.00</td>
-		      <td class="cent">3</td>
-		      <td class="cent">$225.00</td>
-		  </tr>
+      {% endfor %}
 
 		  <tr>
 		    <td colspan="5"></td>
@@ -206,24 +179,24 @@ body {
 		  <tr>
 		      <td colspan="2" class="blank"> </td>
 		      <td colspan="2" class="total-line">Subtotal</td>
-		      <td class="total-value"><div id="subtotal">$875.00</div></td>
+		      <td class="total-value"><div id="subtotal">${{STAB[0]}}</div></td>
 		  </tr>
 		  <tr>
 
 		      <td colspan="2" class="blank"> </td>
 		      <td colspan="2" class="total-line">Total</td>
-		      <td class="total-value"><div id="total">$875.00</div></td>
+		      <td class="total-value"><div id="total">${{STAB[1]}}</div></td>
 		  </tr>
 		  <tr>
 		      <td colspan="2" class="blank"> </td>
 		      <td colspan="2" class="total-line">Amount Paid</td>
 
-		      <td class="total-value"><p id="paid">$0.00</p></td>
+		      <td class="total-value"><p id="paid">${{STAB[2]}}</p></td>
 		  </tr>
 		  <tr>
 		      <td colspan="2" class="blank"> </td>
 		      <td colspan="2" class="total-line balance">Balance Due</td>
-		      <td class="total-value balance"><div class="due">$875.00</div></td>
+		      <td class="total-value balance"><div class="due">${{STAB[3]}}</div></td>
 		  </tr>
 
 		</table>

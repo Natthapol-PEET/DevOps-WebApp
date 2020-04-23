@@ -6,7 +6,9 @@ Bootstrap(app)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    li_data = ["iced milk tea", 35]
+
+    return render_template('index.html', li_data=li_data)
 
 @app.route('/login')
 def login():
@@ -26,7 +28,14 @@ def get_login():
 
 @app.route('/invoice')
 def invoice():
-    return render_template('invoice.html')
+    customer_address = ["Mr.Nonthasri  Nonthasri", "83/3 Kud Khanuan Bungkaew Subdistrict", "Non Sa-at District", "Udon Thani Province 41240", "093-1851721"]
+    META = ["000123", "December 15, 2009", 875.00]
+    values = [["SSL Renewals", "Yearly renewals of SSL certificates on main domain and several subdomains", 75.00, 3, 75.00],
+          ["SSL Renewals", "Yearly renewals of SSL certificates on main domain and several subdomains", 75.00, 3, 75.00],
+          ["SSL Renewals", "Yearly renewals of SSL certificates on main domain and several subdomains", 75.00, 3, 75.00]]
+    STAB = [875.00, 875.00, 0.00, 875.00]
+
+    return render_template('invoice.html', META=META, list_data=values, customer_address=customer_address, STAB=STAB)
 
 @app.route('/summary')
 def summary():
