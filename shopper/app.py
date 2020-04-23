@@ -8,5 +8,9 @@ Bootstrap(app)
 def index():
     return render_template('index.html')
 
+@app.route('/product_detail')
+def product():
+    return render_template('product_detail.html')
+
 if __name__== "__main__":
     app.run(debug=True)
