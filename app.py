@@ -1,5 +1,15 @@
 from flask import  Flask,render_template, request
 from flask_bootstrap import Bootstrap
+import mysql.connector
+
+config = {
+        'user': 'root',
+        'password': 'root',
+        'host': 'db',
+        'port': '3306',
+        'database': 'project'
+    }
+mydb = mysql.connector.connect(**config)
 
 app = Flask(__name__)
 Bootstrap(app)
