@@ -6,9 +6,20 @@ Bootstrap(app)
 
 @app.route('/')
 def index():
-    li_data = ["iced milk tea", 35]
+    Smoothie = [    [["Americano Smoothie", "static/coffeeimg/smoothie/americano.jpg", 45],
+                    ["Cappucino Smoothie", "static/coffeeimg/smoothie/cappuccino.jpg", 40],
+                    ["Cocoa Smoothie", "static/coffeeimg/smoothie/cocoashake.jpg", 45],
+                    ["Espresso Smoothie", "static/coffeeimg/smoothie/expresso.jpg", 45]],
 
-    return render_template('index.html', li_data=li_data)
+                    [["Green Tea Smoothie", "static/coffeeimg/smoothie/Green-Smoothie.jpg", 45],
+                    ["Milk Smoothie", "static/coffeeimg/smoothie/milk-smoothie.jpg", 45],
+                    ["Mocha Smoothie", "static/coffeeimg/smoothie/mocha.jpg", 35],
+                    ["Thai Milk Tea Smoothie", "static/coffeeimg/smoothie/thai-milk-tea.jpg", 35]]
+                ]
+
+    AA = "Hello"
+
+    return render_template('index.html', Smoothie=Smoothie, BB=AA)
 
 @app.route('/login')
 def login():
@@ -17,14 +28,22 @@ def login():
 @app.route('/show', methods=['POST'])
 def get_login():
     user = request.form['uname']
-    pwd = request.form['psw']
+    # pwd = request.form['psw']
 
-    if user == 'PEET' and pwd == '10042541':
-        text = 'Welcome to Shop'
-    else:
-        text = 'Error !!'
+    # if user == 'PEET' and pwd == '10042541':
+    #     text = 'Welcome to Shop'
+    # else:
+    #     text = 'Error !!'
 
-    return render_template('show.html', text=text)
+    return render_template('show.html', text=user)
+
+@app.route('/product_detail', methods=['POST'])
+def product():
+    product = request.form['product']
+
+    data = [product, "ร้อน", "1001", 45]
+
+    return render_template('product_detail.html', data=data)
 
 @app.route('/invoice')
 def invoice():
