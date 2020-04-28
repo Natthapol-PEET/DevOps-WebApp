@@ -7,16 +7,17 @@ config = {
         'password': 'root',
         'host': 'db',
         'port': '3306',
-        'database': 'project'
+        'database': 'coffee_shop'
     }
 mydb = mysql.connector.connect(**config)
-
+mycursor = mydb.cursor()
 app = Flask(__name__)
 Bootstrap(app)
 
 @app.route('/')
 def index():
-    Smoothie = [    [["Americano Smoothie", "static/coffeeimg/smoothie/americano.jpg", 45],
+    
+    Smoothie = [   [["Americano Smoothie", "static/coffeeimg/smoothie/americano.jpg", 45],
                     ["Cappucino Smoothie", "static/coffeeimg/smoothie/cappuccino.jpg", 40],
                     ["Cocoa Smoothie", "static/coffeeimg/smoothie/cocoashake.jpg", 45],
                     ["Espresso Smoothie", "static/coffeeimg/smoothie/expresso.jpg", 45]],
@@ -26,10 +27,23 @@ def index():
                     ["Mocha Smoothie", "static/coffeeimg/smoothie/mocha.jpg", 35],
                     ["Thai Milk Tea Smoothie", "static/coffeeimg/smoothie/thai-milk-tea.jpg", 35]]
                 ]
+    sql = "SELECT * FROM coffee_data where type like 'smoothie' "
+	
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall()
+	
+    array= [    [myresult[0],
+		     myresult[1],
+		     myresult[2],
+		     myresult[3]],
+		     
+                    [myresult[4],
+		     myresult[5],
+		     myresult[6],
+		     myresult[7]]
+		]
 
-    AA = "Hello"
-
-    return render_template('index.html', Smoothie=Smoothie, BB=AA)
+    return render_template('index.html', Smoothie=array)
 
 @app.route('/login')
 def login():
@@ -46,6 +60,30 @@ def get_login():
     #     text = 'Error !!'
 
     return render_template('show.html', text=user)
+
+@app.route('/show')
+def get_login2():
+	
+	sql = "SELECT * FROM coffee_data where type like 'smoothie' "
+	
+	mycursor.execute(sql)
+	myresult = mycursor.fetchall()
+	
+	array= [    [myresult[0],
+		     myresult[1],
+		     myresult[2],
+		     myresult[3]],
+		     
+                    [myresult[4],
+		     myresult[5],
+		     myresult[6],
+		     myresult[7]]
+		]
+	array2=myresult[0][1]
+	
+	return render_template('show.html', datadb=array)	
+
+
 
 @app.route('/product_detail', methods=['POST'])
 def product():

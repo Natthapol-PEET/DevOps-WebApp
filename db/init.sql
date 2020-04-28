@@ -52,7 +52,7 @@ VALUES ("3002", "Cappucino Smoothie", 40, "smoothie", "coffee with some milk mak
 INSERT INTO coffee_data (prod_id, name, price, type, des, path_img) 
 VALUES ("3003", "Cocoa Smoothie", 45, "smoothie", "sweet and bitter flavor, smoothie makes it a smooth feeling", "static/coffeeimg/smoothie/cocoashake.jpg");
 INSERT INTO coffee_data (prod_id, name, price, type, des, path_img) 
-VALUES ("3004", "Espresso Smoothie", 45, "strong coffee flavor ", "static/coffeeimg/smoothie/expresso.jpg");
+VALUES ("3004", "Espresso Smoothie", 45,"smoothie", "strong coffee flavor ", "static/coffeeimg/smoothie/expresso.jpg");
 INSERT INTO coffee_data (prod_id, name, price, type, des, path_img) 
 VALUES ("3005", "Green Tea Smoothie", 45, "smoothie", "bitter and smooth flavor", "static/coffeeimg/smoothie/Green-smoothie.jpg");
 INSERT INTO coffee_data (prod_id, name, price, type, des, path_img) 
@@ -67,8 +67,8 @@ VALUES ("3008", "Thai Milk Tea Smoothie", 35, "smoothie", "tea with some milk", 
 CREATE TABLE user (
 uid         varchar(10) NOT NULL PRIMARY KEY,
 address     varchar(100) NOT NULL,
-passwd      varchar(10) NOT NULL,
-name        varchar(40) NOT NULL,
+passwd      varchar(20) NOT NULL,
+name        varchar(20) NOT NULL,
 tel_user    varchar(20) NOT NULL
 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
