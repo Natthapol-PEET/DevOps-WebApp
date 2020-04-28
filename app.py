@@ -1,6 +1,10 @@
 from flask import  Flask,render_template, request
 from flask_bootstrap import Bootstrap
+from numpy import array
 import mysql.connector
+
+app = Flask(__name__)
+Bootstrap(app)
 
 config = {
         'user': 'root',
@@ -11,12 +15,26 @@ config = {
     }
 mydb = mysql.connector.connect(**config)
 mycursor = mydb.cursor()
-app = Flask(__name__)
-Bootstrap(app)
+
+def group(data):
+  ar0, ar1, arr3d = [], [], []
+  i = 0
+
+  for x in array(data):
+    if i < 4:
+      ar0.append( x )
+    else:
+      ar1.append( x )
+    i += 1
+
+  arr3d.append( ar0 )
+  arr3d.append( ar1 )
+
+  return arr3d
 
 @app.route('/')
 def index():
-    
+
     Smoothie = [   [["Americano Smoothie", "static/coffeeimg/smoothie/americano.jpg", 45],
                     ["Cappucino Smoothie", "static/coffeeimg/smoothie/cappuccino.jpg", 40],
                     ["Cocoa Smoothie", "static/coffeeimg/smoothie/cocoashake.jpg", 45],
@@ -27,23 +45,30 @@ def index():
                     ["Mocha Smoothie", "static/coffeeimg/smoothie/mocha.jpg", 35],
                     ["Thai Milk Tea Smoothie", "static/coffeeimg/smoothie/thai-milk-tea.jpg", 35]]
                 ]
-    sql = "SELECT * FROM coffee_data where type like 'smoothie' "
-	
-    mycursor.execute(sql)
-    myresult = mycursor.fetchall()
-	
-    array= [    [myresult[0],
-		     myresult[1],
-		     myresult[2],
-		     myresult[3]],
-		     
-                    [myresult[4],
-		     myresult[5],
-		     myresult[6],
-		     myresult[7]]
-		]
 
-    return render_template('index.html', Smoothie=array)
+    TYPE = ['cool', 'hot', 'smoothie']
+    COOL, HOT, SMOOTHIE = [], [], []
+    j = 0
+
+    for i in TYPE:
+        sql = "SELECT prod_id, path_img, name, price FROM coffee_data where type like '"+i+"' "
+        mycursor.execute(sql)
+        myresult = mycursor.fetchall()
+
+        if j == 0:
+            COOL = myresult
+        elif j == 1:
+            HOT = myresult
+        else:
+            SMOOTHIE = myresult
+        j += 1
+
+    COOL = group(COOL)
+    HOT = group(HOT)
+    SMOOTHIE = group(SMOOTHIE)
+
+
+    return render_template('index.html', Smoothie=SMOOTHIE, Cool=COOL, Hot=HOT)
 
 @app.route('/login')
 def login():
@@ -63,27 +88,7 @@ def get_login():
 
 @app.route('/show')
 def get_login2():
-	
-	sql = "SELECT * FROM coffee_data where type like 'smoothie' "
-	
-	mycursor.execute(sql)
-	myresult = mycursor.fetchall()
-	
-	array= [    [myresult[0],
-		     myresult[1],
-		     myresult[2],
-		     myresult[3]],
-		     
-                    [myresult[4],
-		     myresult[5],
-		     myresult[6],
-		     myresult[7]]
-		]
-	array2=myresult[0][1]
-	
-	return render_template('show.html', datadb=array)	
-
-
+	return render_template('show.html')
 
 @app.route('/product_detail', methods=['POST'])
 def product():
@@ -92,6 +97,10 @@ def product():
     data = [product, "ร้อน", "1001", 45]
 
     return render_template('product_detail.html', data=data)
+
+@app.route('/cart')
+def cart():
+    return render_template('cart.html')
 
 @app.route('/invoice')
 def invoice():

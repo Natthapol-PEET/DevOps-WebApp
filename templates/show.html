@@ -5,8 +5,14 @@
     <title></title>
   </head>
   <body>
-    <h1>
-    {{datadb}}
-    </h1>
+
+    {% for x in Smoothie[0] %}
+    <h1> {{x[0]}} </h1>
+    {% endfor %}
+
+    <br><br>
+
+    <h1> {{Smoothie}} </h1>
+
   </body>
 </html>

@@ -1,2 +1,3 @@
 Flask-Bootstrap
 mysql-connector
+numpy
