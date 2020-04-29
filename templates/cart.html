@@ -20,10 +20,10 @@ body {
     <div class="span8">
       <div class="account pull-right">
         <ul class="user-menu">
-          <li><a href="#">My Account</a></li>
-          <li><a href="cart.html">Your Cart</a></li>
-          <li><a href="checkout.html">Checkout</a></li>
-          <li><a href="register.html">Login</a></li>
+          <li style="color:black;font-size:22px"><a href="#" >My Account</a></li>
+          <li style="color:black;font-size:22px"><a href="cart.html">Your Cart</a></li>
+          <li style="color:black;font-size:22px"><a href="checkout.html">Checkout</a></li>
+          <li style="color:black;font-size:22px"><a href="register.html">Login</a></li>
         </ul>
       </div>
     </div>
@@ -63,7 +63,7 @@ body {
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>No.</th>
+              <th>product ID.</th>
               <th>Remove</th>
               <th>Image</th>
               <th>Product Name</th>
@@ -74,52 +74,24 @@ body {
 
           </thead>
           <tbody>
+            {% for x in data %}
+              {% for y in Qty %}
             <tr>
-              <td>1.</td>
+              <td>{{y[0]}}</td>
               <td><input type="checkbox" value="option1"></td>
-              <td><a href="product_detail.html"><img alt="" src="static/coffeeimg/acoffee/3.jpg" width="100" height="10" border="0"></a></td>
-              <td><a href="product_detail.html">กาแฟ โบราณ</a>
-              <a href="products.html" class="category">(Ancient coffee)</a></td>
-              <td>1</td>
-              <td>30฿</td>
-              <td>30฿</td>
+              <td><a href="product_detail.html"><img alt="" src={{x[4]}} width="100" height="10" border="0"></a></td>
+              <td><a href="product_detail.html">{{x[0]}}</a></td>
+              <td>{{y[2]}}</td>
+              <td>{{x[1]}}</td>
+              <td>{{x[1]*y[2]}}</td>
             </tr>
-            <tr>
-              <td>2.</td>
-              <td><input type="checkbox" value="option1"></td>
-              <td><a href="product_detail.html"><img alt="" src="static/coffeeimg/acoffee/7.jpg" width="100" height="10" border="0"></a></td>
-              <td ><a href="product_detail.html" class="title">โอเลี้ยง</a>
-              <a href="products.html" class="category">(Ice black coffee)</a></td>
-              <td>2</td>
-              <td>30฿</td>
-              <td>60฿</td>
-            </tr>
-            <tr>
-              <td>3.</td>
-              <td><input type="checkbox" value="option1"></td>
-              <td><a href="product_detail.html"><img alt="" src="static/coffeeimg/cappuccino.jpg" width="100" height="10" border="0"></a></td>
-              <td><a href="product_detail.html" class="title">คาปูชิโน่</a>
-              <a href="products.html" class="category">(Cappuccinot)</a></td>
-              <td>1</td>
-              <td>45฿</td>
-              <td>45฿</td>
-            </tr>
-            <tr>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td><strong>135฿</strong></td>
-            </tr>
+              {% endfor %}
+            {% endfor %}
           </tbody>
         </table>
         <hr>
         <p class="cart-total right">
-          <strong>Sub-Total</strong>:	$100.00<br>
-          <strong>Eco Tax (-2.00)</strong>: $2.00<br>
-          <strong>VAT (17.5%)</strong>: $17.50<br>
+
           <strong>Total</strong>: $119.50<br>
         </p>
         <hr/>

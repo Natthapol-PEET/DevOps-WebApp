@@ -70,11 +70,12 @@
 						<h4><strong>ราคา: {{data_info[0][1]}}  บาท</strong></h4>
 					</div>
 					<div class="span5">
-						<form class="form-inline">
+						<form class="form-inline" action ="cart" method="POST">
 							<p>&nbsp;</p>
 							<label>Qty:</label>
-							<input type="text" class="span1" placeholder="1">
-							<button class="btn btn-inverse" type="submit">เพิ่มเข้าตะกร้า</button>
+							<input type = "number" , name = "quantity" >
+							<button class="btn btn-inverse" type="submit" >เพิ่มเข้าตะกร้า</button>
+							<input type="hidden" name="id" value={{data[0]}}>
 						</form>
 					</div>
 				</div>

@@ -82,23 +82,45 @@ def get_login2():
 
 @app.route('/product_detail', methods=['POST','GET'])
 def product():
-
     id = request.form.get('id')
-    # img_path = request.form.get('path')
-    # name = request.form.get('name')
-    # price = request.form.get('price')
     sql = "SELECT name, price, type, des, path_img FROM coffee_data where prod_id like '"+id+"' "
     mycursor.execute(sql)
     myresult = mycursor.fetchall()
 
-
-    data =[id]
+    data = [id]
 
     return render_template('product_detail.html', data=data, data_info=myresult)
 
-@app.route('/cart')
+@app.route('/cart',methods=['POST'])
 def cart():
-    return render_template('cart.html')
+    Qty = request.form.get("quantity")
+    id = request.form.get('id')
+    sql = "SELECT name, price, type, des, path_img FROM coffee_data where prod_id like '"+id+"' "
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall()
+    total = int(Qty) * myresult[0][1]
+
+    # insert data
+
+    sqlI = "INSERT INTO chart_data (prod_id, uid, quantity) VALUES ( %s , %s , %s ) "
+    val = (id,"peet123",Qty)
+    mycursor.execute(sqlI,val)
+
+    mydb.commit()
+
+    # show cart_data
+
+    sqlC = "SELECT * FROM chart_data "
+    mycursor.execute(sqlC)
+    data_cart = mycursor.fetchall()
+
+    sql_1 = "SELECT name, price, type, des, path_img FROM coffee_data where prod_id like '"+data_cart[0][0]+"' "
+    mycursor.execute(sql_1)
+    show_data = mycursor.fetchall()
+
+
+
+    return render_template('cart.html' ,data = show_data,Qty = data_cart)
 
 @app.route('/invoice')
 def invoice():
