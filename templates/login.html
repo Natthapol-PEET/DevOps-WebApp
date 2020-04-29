@@ -19,10 +19,10 @@ body {
     <div class="span8">
       <div class="account pull-right">
         <ul class="user-menu">
-          <li style="color:black;font-size:22px"><a href="#">My Account</a></li>
-          <li style="color:black;font-size:22px"><a href="cart.html">Your Cart</a></li>
-          <li style="color:black;font-size:22px"><a href="checkout.html">Checkout</a></li>
-          <li style="color:black;font-size:22px"><a href="register.html">Login</a></li>
+				  <li style="color:black;font-size:22px"><a href="login">My Account</a></li>
+				  <li style="color:black;font-size:22px"><a href="cart">Your Cart</a></li>
+				  <li style="color:black;font-size:22px"><a href="summary">Summary</a></li>
+				  <li style="color:black;font-size:22px"><a href="login"><b>{{UserLogin}}</b></a></li>
         </ul>
       </div>
     </div>
@@ -139,6 +139,7 @@ body {
 
 
 <!-- <h2>Login Form</h2> -->
+{% if UserLogin == 'Login' %}
 <form action="/show" method="post">
   <div class="imgcontainer">
     <img src="static/images/login2.PNG" alt="Avatar" class="avatar">
@@ -165,6 +166,11 @@ body {
   </div>
 </form>
 
+{% else %}
+
+<h1> LOGOUT </h1>
+
+{% endif %}
 
 	<section class="our_client">
 		<img src="static/coffeeimg/footer-bg.jpg" alt="" height="60" width="1700">

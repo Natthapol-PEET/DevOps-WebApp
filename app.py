@@ -16,6 +16,9 @@ config = {
 mydb = mysql.connector.connect(**config)
 mycursor = mydb.cursor()
 
+UserLogin = 'peet123'
+PageIndex = 0
+
 def group(data):
   ar0, ar1, arr3d = [], [], []
   i = 0
@@ -119,58 +122,91 @@ def index():
     HOT = group(HOT)
     SMOOTHIE = group(SMOOTHIE)
 
-
-    return render_template('index.html', Smoothie=SMOOTHIE, Cool=COOL, Hot=HOT)
+    return render_template('index.html', Smoothie=SMOOTHIE, Cool=COOL, Hot=HOT, UserLogin=UserLogin)
 
 @app.route('/login')
 def login():
-    return render_template('login.html')
+    return render_template('login.html', UserLogin=UserLogin)
 
 @app.route('/show', methods=['POST'])
 def get_login():
     user = request.form['uname']
-    # pwd = request.form['psw']
+    pwd = request.form['psw']
 
     # if user == 'PEET' and pwd == '10042541':
     #     text = 'Welcome to Shop'
     # else:
     #     text = 'Error !!'
 
-    return render_template('show.html', text=user)
+    uidpass = [user, pwd]
+
+    mycursor.execute("SELECT uid, passwd FROM user")
+    myresult = mycursor.fetchall()
+
+    if uidpass[0] in array(myresult) and uidpass[1] in array(myresult):
+        text = 'PASS'
+    else:
+        text = 'No PASS'
+
+    return render_template('show.html', text=text, UserLogin=UserLogin)
 
 @app.route('/show')
 def get_login2():
 	return render_template('show.html')
 
-@app.route('/product_detail', methods=['POST'])
+@app.route('/product_detail', methods=['POST','GET'])
 def product():
-    product = request.form['product']
 
-    data = [product, "ร้อน", "1001", 45]
+    id = request.form.get('id')
+    sql = "SELECT name, price, type, des, path_img FROM coffee_data where prod_id like '"+id+"' "
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall()
 
-    return render_template('product_detail.html', data=data)
+
+    data =[id]
+
+    return render_template('product_detail.html', data=data, data_info=myresult, UserLogin=UserLogin)
 
 @app.route('/cart')
 def cart():
-    return render_template('cart.html')
+    return render_template('cart.html', UserLogin=UserLogin)
 
 @app.route('/invoice')
 def invoice():
-    customer_address = ["Mr.Nonthasri  Nonthasri", "83/3 Kud Khanuan Bungkaew Subdistrict", "Non Sa-at District", "Udon Thani Province 41240", "093-1851721"]
+    customer_address = ["Mr.Nonthasri  Nonthasri",
+                        "83/3 Kud Khanuan Bungkaew Subdistrict",
+                        "Non Sa-at District",
+                        "Udon Thani Province 41240",
+                        "093-1851721"]
+
+    customer_address = ["anaphut rattanakham",
+                        "7/3 ban buangdanag",
+                        "patumrat roi-et 45190",
+                        "",
+                        "0649724822"]
+
+    # customer_address = ["natthapol",
+    #                     "8/3 ban nuang jonggram ",
+    #                     "hell 5555",
+    #                     "",
+    #                     "0666131313"]
+
     META = ["000123", "December 15, 2009", 875.00]
+
     values = [["SSL Renewals", "Yearly renewals of SSL certificates on main domain and several subdomains", 75.00, 3, 75.00],
           ["SSL Renewals", "Yearly renewals of SSL certificates on main domain and several subdomains", 75.00, 3, 75.00],
           ["SSL Renewals", "Yearly renewals of SSL certificates on main domain and several subdomains", 75.00, 3, 75.00]]
+
     STAB = [875.00, 875.00, 0.00, 875.00]
 
-    return render_template('invoice.html', META=META, list_data=values, customer_address=customer_address, STAB=STAB)
+    return render_template('invoice.html', META=META, list_data=values, customer_address=customer_address, STAB=STAB, UserLogin=UserLogin)
 
 @app.route('/summary')
 def summary():
     values = [['coffee', 1, 30], ['Fresh milk', 40, 50], ['Latte', 40, 50]]
     sum = ["summary", 9, 215]
 
-    return render_template('summary.html', data=values, sum=sum)
+    return render_template('summary.html', data=values, sum=sum, UserLogin=UserLogin)
 
 @app.route('/summary', methods=['POST'])
 def get_summary():
@@ -182,7 +218,7 @@ def get_summary():
 
     values, sum, sql = GET_SUMMARY_fn(str(birthday))
 
-    return render_template('summary.html', data=values, sum=sum, birthday=str(birthday), sql=sql)
+    return render_template('summary.html', data=values, sum=sum, birthday=str(birthday), UserLogin=UserLogin)
 
 if __name__== "__main__":
     app.run(debug=True)
