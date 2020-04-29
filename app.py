@@ -50,7 +50,7 @@ def GET_SUMMARY_fn(date):
     count = []
 
     for i in prod_id:
-        sql = "SELECT COUNT(prod_id) FROM order_hist WHERE prod_id LIKE " +str(i)+ " and date BETWEEN '"+str(date)+" 12:00:00' AND '"+str(date)+" 23:30:00' "
+        sql = "SELECT COUNT(prod_id) FROM order_hist WHERE prod_id LIKE " +str(i)+ " and date BETWEEN '"+str(date)+" 00:00:00' AND '"+str(date)+" 23:59:00' "
         mycursor.execute(sql)
         myresult = mycursor.fetchall()
         count.append(myresult[0][0])
