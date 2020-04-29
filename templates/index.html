@@ -34,7 +34,7 @@ body {
 <div id="wrapper" class="container">
 	<section class="navbar main-menu">
 		<div class="navbar-inner main-menu">
-			<a href="index.html" class="logo pull-left"><img src="static/images/logocoff.PNG" class="site_logo" alt=""></a>
+			<a href="index.html" class="logo pull-left"><img src="static/images/logo.png" class="site_logo" alt=""></a>
 			<nav id="menu" class="pull-right">
 				<ul>
 					<li style="font-size:18px"><a href="./products.html"><font size="+1">กาแฟปั่น</font></a>
@@ -90,76 +90,40 @@ body {
 							<div class="carousel-inner">
 								<div class="active item">
 									<ul class="thumbnails">
-										<li class="span3">
-											<div class="product-box">
-												<span class="sale_tag"></span>
-												<p><a href="product_detail.html"><img src="static/coffeeimg/cool/blackicetea.jpg" alt="" style="height:270px;" /></a></p>
-												<a href="product_detail.html" class="title">ชาดำเย็น {{BB}}</a><br/>
-												<a href="products.html" class="category">Iced Black Tea</a>
-												<p class="price">35 บาท</p>
-											</div>
-										</li>
-										<li class="span3">
-											<div class="product-box">
-												<span class="sale_tag"></span>
-												<p><a href="product_detail.html"><img src="static/coffeeimg/cool/greentea.png" alt="" style="height:270px;" /></a></p>
-												<a href="product_detail.html" class="title">ชาเขียวเย็น</a><br/>
-												<a href="products.html" class="category">Ice Green Tea</a>
-												<p class="price">35 บาท</p>
-											</div>
-										</li>
-										<li class="span3">
-											<div class="product-box">
-												<p><a href="product_detail.html"><img src="static/coffeeimg/cool/icecocoa.jpg" alt="" style="height:270px;" /></a></p>
-												<a href="product_detail.html" class="title">โกโก้เย็น</a><br/>
-												<a href="products.html" class="category">Ice Cocoa</a>
-												<p class="price">30 บาท</p>
-											</div>
-										</li>
-										<li class="span3">
-											<div class="product-box">
-												<p><a href="product_detail.html"><img src="static/coffeeimg/cool/icecoffee.jpg" alt="" style="height:270px;" /></a></p>
-												<a href="product_detail.html" class="title">กาแฟเย็น</a><br/>
-												<a href="products.html" class="category">Ice Coffee</a>
-												<p class="price">35 บาท</p>
-											</div>
-										</li>
-									</ul>
-								</div>
-								<div class="item">
-									<ul class="thumbnails">
-										<li class="span3">
-											<div class="product-box">
-												<p><a href="product_detail.html"><img src="static/coffeeimg/cool/icemilktea.png" alt="" style="height:270px;" /></a></p>
-												<a href="product_detail.html" class="title">ชานมเย็น</a><br/>
-												<a href="products.html" class="category">Ice Milk Tea</a>
-												<p class="price">35 บาท</p>
-											</div>
-										</li>
-										<li class="span3">
-											<div class="product-box">
-												<p><a href="product_detail.html"><img src="static/coffeeimg/cool/lemonicetea.jpg" alt="" style="height:270px;" /></a></p>
-												<a href="product_detail.html" class="title">ชามะนาวเย็น</a><br/>
-												<a href="products.html" class="category"> Ice Lemon Tea</a>
-												<p class="price">35 บาท</p>
-											</div>
-										</li>
-										<li class="span3">
-											<div class="product-box">
-												<p><a href="product_detail.html"><img src="static/coffeeimg/cool/oleay.jpg" alt="" style="height:270px;" /></a></p>
-												<a href="product_detail.html" class="title">โอเลี้ยง</a><br/>
-												<a href="products.html" class="category">Ice black coffee</a>
-												<p class="price">30 บาท</p>
-											</div>
-										</li>
-										<li class="span3">
-											<div class="product-box">
-												<p><a href="product_detail.html"><img src="static/coffeeimg/cool/pinkmilk.jpg" alt="" style="height:270px;" /></a></p>
-												<a href="product_detail.html" class="title">นมเย็น</a><br/>
-												<a href="products.html" class="category">Iced Pink Milk</a>
-												<p class="price">35 บาท</p>
-											</div>
-										</li>
+                    {% for x in Cool[0] %}
+                                    <li class="span3">
+                                      <div class="product-box">
+                                        <form action="product_detail" method="post">
+                                          <input type="hidden" name="id" value={{x[0]}}>
+                                          <input type="hidden" name="path" value={{x[1]}}>
+                                          <input type="hidden" name="name" value={{x[2]}}>
+                                          <input type="hidden" name="price" value={{x[3]}}>
+                                            <a href="javascript:;" onclick="parentNode.submit();"><img src={{x[1]}} alt="" style="height:270px;" /></a><br/><br/>
+                                            <a href="javascript:;" onclick="parentNode.submit();" style="font-size:18px;" class="category">{{x[2]}}</a><br/>
+                                            <a href="javascript:;" onclick="parentNode.submit();" class="price" style="font-size:20px;">{{x[3]}} บาท</a>
+                                        </form>
+                                      </div>
+                                    </li>
+                                    {% endfor %}
+                                  </ul>
+                                </div>
+                                <div class="item">
+                                  <ul class="thumbnails">
+                                    {% for x in Cool[1] %}
+                                    <li class="span3">
+                                      <div class="product-box">
+                                        <form action="product_detail" method="post">
+                                          <input type="hidden" name="id" value={{x[0]}}>
+                                          <input type="hidden" name="path" value={{x[1]}}>
+                                          <input type="hidden" name="name" value={{x[2]}}>
+                                          <input type="hidden" name="price" value={{x[3]}}>
+                                            <a href="javascript:;" onclick="parentNode.submit();"><img src={{x[1]}} alt="" style="height:270px;" /></a><br/><br/>
+                                            <a href="javascript:;" onclick="parentNode.submit();" style="font-size:18px;" class="category">{{x[2]}}</a><br/>
+                                            <a href="javascript:;" onclick="parentNode.submit();" class="price" style="font-size:20px;">{{x[3]}} บาท</a>
+                                        </form>
+                                      </div>
+                                    </li>
+                      {% endfor %}
 									</ul>
 								</div>
 							</div>
@@ -179,75 +143,40 @@ body {
 							<div class="carousel-inner">
 								<div class="active item">
 									<ul class="thumbnails">
-										<li class="span3">
-											<div class="product-box">
-												<span class="sale_tag"></span>
-												<p><a href="product_detail.html"><img src="static/coffeeimg/hot/decaf.jpg" alt="" style="height:270px;" /></a></p>
-												<a href="product_detail.html" class="title">ดี-แคฟ</a><br/>
-												<a href="products.html" class="category">Decaf Coffee</a>
-												<p class="price">45 บาท</p>
-											</div>
-										</li>
-										<li class="span3">
-											<div class="product-box">
-												<p><a href="product_detail.html"><img src="static/coffeeimg/hot/fr.jpg" alt="" style="height:270px;" /></a></p>
-												<a href="product_detail.html" class="title">เฟรนช์-เพรส</a><br/>
-												<a href="products.html" class="category">French Press</a>
-												<p class="price">40 บาท</p>
-											</div>
-										</li>
-										<li class="span3">
-											<div class="product-box">
-												<p><a href="product_detail.html"><img src="static/coffeeimg/hot/hot-cappuccino.jpg" alt="" style="height:270px;" /></a></p>
-												<a href="product_detail.html" class="title">คาปูชิโน่</a><br/>
-												<a href="products.html" class="category">Hot Cappuccino</a>
-												<p class="price">45 บาท</p>
-											</div>
-										</li>
-										<li class="span3">
-											<div class="product-box">
-												<p><a href="product_detail.html"><img src="static/coffeeimg/hot/hot-cocoa.jpg" alt="" style="height:270px;" /></a></p>
-												<a href="product_detail.html" class="title">โกโก้ร้อน</a><br/>
-												<a href="products.html" class="category">Hot Cocoa</a>
-												<p class="price">45 บาท</p>
-											</div>
-										</li>
-									</ul>
-								</div>
-								<div class="item">
-									<ul class="thumbnails">
-										<li class="span3">
-											<div class="product-box">
-												<p><a href="product_detail.html"><img src="static/coffeeimg/hot/hot-expresso.jpg" alt="" style="height:270px;" /></a></p>
-												<a href="product_detail.html" class="title">แอสเพรสโช่</a><br/>
-												<a href="products.html" class="category">Hot Expresso</a>
-												<p class="price">45 บาท</p>
-											</div>
-										</li>
-										<li class="span3">
-											<div class="product-box">
-												<p><a href="product_detail.html"><img src="static/coffeeimg/hot/hot-green-tea.jpg" alt="" style="height:270px;" /></a></p>
-												<a href="product_detail.html" class="title">ชาเขียวร้อน</a><br/>
-												<a href="products.html" class="category">Hot Green tea</a>
-												<p class="price">45 บาท</p>
-											</div>
-										</li>
-										<li class="span3">
-											<div class="product-box">
-												<p><a href="product_detail.html"><img src="static/coffeeimg/hot/latte.jpg" alt="" style="height:270px;" /></a></p>
-												<a href="product_detail.html" class="title">ลาเต้ ร้อน</a><br/>
-												<a href="products.html" class="category">Hot latte</a>
-												<p class="price">35 บาท</p>
-											</div>
-										</li>
-										<li class="span3">
-											<div class="product-box">
-												<p><a href="product_detail.html"><img src="static/coffeeimg/hot/macchiato.jpg" alt="" style="height:270px;" /></a></p>
-												<a href="product_detail.html" class="title">มัค-คีย-อา-โต้</a><br/>
-												<a href="products.html" class="category">Macchiato</a>
-												<p class="price">35 บาท</p>
-											</div>
-										</li>
+                    {% for x in Hot[0] %}
+                                    <li class="span3">
+                                      <div class="product-box">
+                                        <form action="product_detail" method="post">
+                                          <input type="hidden" name="id" value={{x[0]}}>
+                                          <input type="hidden" name="path" value={{x[1]}}>
+                                          <input type="hidden" name="name" value={{x[2]}}>
+                                          <input type="hidden" name="price" value={{x[3]}}>
+                                            <a href="javascript:;" onclick="parentNode.submit();"><img src={{x[1]}} alt="" style="height:270px;" /></a><br/><br/>
+                                            <a href="javascript:;" onclick="parentNode.submit();" style="font-size:18px;" class="category">{{x[2]}}</a><br/>
+                                            <a href="javascript:;" onclick="parentNode.submit();" class="price" style="font-size:20px;">{{x[3]}} บาท</a>
+                                        </form>
+                                      </div>
+                                    </li>
+                                    {% endfor %}
+                                  </ul>
+                                </div>
+                                <div class="item">
+                                  <ul class="thumbnails">
+                                    {% for x in Hot[1] %}
+                                    <li class="span3">
+                                      <div class="product-box">
+                                        <form action="product_detail" method="post">
+                                          <input type="hidden" name="id" value={{x[0]}}>
+                                          <input type="hidden" name="path" value={{x[1]}}>
+                                          <input type="hidden" name="name" value={{x[2]}}>
+                                          <input type="hidden" name="price" value={{x[3]}}>
+                                            <a href="javascript:;" onclick="parentNode.submit();"><img src={{x[1]}} alt="" style="height:270px;" /></a><br/><br/>
+                                            <a href="javascript:;" onclick="parentNode.submit();" style="font-size:18px;" class="category">{{x[2]}}</a><br/>
+                                            <a href="javascript:;" onclick="parentNode.submit();" class="price" style="font-size:20px;">{{x[3]}} บาท</a>
+                                        </form>
+                                      </div>
+                                    </li>
+                      {% endfor %}
 									</ul>
 								</div>
 							</div>
@@ -274,7 +203,10 @@ body {
                     <li class="span3">
                       <div class="product-box">
                         <form action="product_detail" method="post">
-                          <input type="hidden" name="product" value={{x[0]}}>
+                          <input type="hidden" name="id" value={{x[0]}}>
+                          <input type="hidden" name="path" value={{x[1]}}>
+                          <input type="hidden" name="name" value={{x[2]}}>
+                          <input type="hidden" name="price" value={{x[3]}}>
                             <a href="javascript:;" onclick="parentNode.submit();"><img src={{x[1]}} alt="" style="height:270px;" /></a><br/><br/>
                             <a href="javascript:;" onclick="parentNode.submit();" style="font-size:18px;" class="category">{{x[2]}}</a><br/>
                             <a href="javascript:;" onclick="parentNode.submit();" class="price" style="font-size:20px;">{{x[3]}} บาท</a>
@@ -290,7 +222,10 @@ body {
                     <li class="span3">
                       <div class="product-box">
                         <form action="product_detail" method="post">
-                          <input type="hidden" name="product" value={{x[0]}}>
+                          <input type="hidden" name="id" value={{x[0]}}>
+                          <input type="hidden" name="path" value={{x[1]}}>
+                          <input type="hidden" name="name" value={{x[2]}}>
+                          <input type="hidden" name="price" value={{x[3]}}>
                             <a href="javascript:;" onclick="parentNode.submit();"><img src={{x[1]}} alt="" style="height:270px;" /></a><br/><br/>
                             <a href="javascript:;" onclick="parentNode.submit();" style="font-size:18px;" class="category">{{x[2]}}</a><br/>
                             <a href="javascript:;" onclick="parentNode.submit();" class="price" style="font-size:20px;">{{x[3]}} บาท</a>
@@ -377,7 +312,7 @@ body {
 				</ul>
 			</div>
 			<div class="span5">
-				<p class="logo"><img src="static/images/image_300.PNG" class="site_logo" alt=""></p>
+				<p class="logo"><img src="static/images/logo.png" class="site_logo" alt=""></p>
 				<p>กาแฟ ที่คุณมั่น ใจ</p>
 				<br/>
 				<span class="social_icons">

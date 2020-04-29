@@ -32,71 +32,9 @@ def group(data):
 
   return arr3d
 
-def GET_SUMMARY_fn(date):
-    mycursor.execute("SELECT prod_id, name, price FROM coffee_data")
-    myresult = mycursor.fetchall()
-
-    prod_id = []
-    name = []
-    price = []
-
-    vsql = []
-
-    for x in array(myresult):
-        prod_id.append(x[0])
-        name.append(x[1])
-        price.append(x[2])
-
-    count = []
-
-    for i in prod_id:
-        sql = "SELECT COUNT(prod_id) FROM order_hist WHERE prod_id LIKE " +str(i)+ " and date BETWEEN '"+str(date)+" 00:00:00' AND '"+str(date)+" 23:59:00' "
-        mycursor.execute(sql)
-        myresult = mycursor.fetchall()
-        count.append(myresult[0][0])
-        vsql.append(sql)
-
-    d = []
-    data = []
-
-    for i in range(len(prod_id)):
-        d.append(name[i])
-        d.append(count[i])
-        d.append( price[i]*count[i] )
-        data.append(d)
-        d = []
-
-    value = []
-    NUM = 0
-    TOTAL = 0
-    summary = []
-
-    for x in data:
-        if x[2] is '':
-            x[2] = 0
-        value.append(x)
-        NUM += int(x[1])
-        TOTAL += float(x[2])
-    summary.append('summary')
-    summary.append(NUM)
-    summary.append(TOTAL)
-
-    return value, summary, vsql
-
-
 @app.route('/')
 def index():
 
-    Smoothie = [   [["Americano Smoothie", "static/coffeeimg/smoothie/americano.jpg", 45],
-                    ["Cappucino Smoothie", "static/coffeeimg/smoothie/cappuccino.jpg", 40],
-                    ["Cocoa Smoothie", "static/coffeeimg/smoothie/cocoashake.jpg", 45],
-                    ["Espresso Smoothie", "static/coffeeimg/smoothie/expresso.jpg", 45]],
-
-                    [["Green Tea Smoothie", "static/coffeeimg/smoothie/Green-Smoothie.jpg", 45],
-                    ["Milk Smoothie", "static/coffeeimg/smoothie/milk-smoothie.jpg", 45],
-                    ["Mocha Smoothie", "static/coffeeimg/smoothie/mocha.jpg", 35],
-                    ["Thai Milk Tea Smoothie", "static/coffeeimg/smoothie/thai-milk-tea.jpg", 35]]
-                ]
 
     TYPE = ['cool', 'hot', 'smoothie']
     COOL, HOT, SMOOTHIE = [], [], []
@@ -142,13 +80,21 @@ def get_login():
 def get_login2():
 	return render_template('show.html')
 
-@app.route('/product_detail', methods=['POST'])
+@app.route('/product_detail', methods=['POST','GET'])
 def product():
-    product = request.form['product']
 
-    data = [product, "ร้อน", "1001", 45]
+    id = request.form.get('id')
+    # img_path = request.form.get('path')
+    # name = request.form.get('name')
+    # price = request.form.get('price')
+    sql = "SELECT name, price, type, des, path_img FROM coffee_data where prod_id like '"+id+"' "
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall()
 
-    return render_template('product_detail.html', data=data)
+
+    data =[id]
+
+    return render_template('product_detail.html', data=data, data_info=myresult)
 
 @app.route('/cart')
 def cart():
@@ -167,7 +113,7 @@ def invoice():
 
 @app.route('/summary')
 def summary():
-    values = [['coffee', 1, 30], ['Fresh milk', 40, 50], ['Latte', 40, 50]]
+    values = [['coffee', 20, 30], ['Fresh milk', 40, 50], ['Latte', 40, 50]]
     sum = ["summary", 9, 215]
 
     return render_template('summary.html', data=values, sum=sum)
@@ -177,12 +123,10 @@ def get_summary():
 
     birthday = request.form['birthday']
 
-    # values = [['coffee', 1, 1], ['Fresh milk', 40, 50], ['Latte', 40, 50]]
-    # sum = ["summary", 9, 215]
+    values = [['coffee', 1, 1], ['Fresh milk', 40, 50], ['Latte', 40, 50]]
+    sum = ["summary", 9, 215]
 
-    values, sum, sql = GET_SUMMARY_fn(str(birthday))
-
-    return render_template('summary.html', data=values, sum=sum, birthday=str(birthday), sql=sql)
+    return render_template('summary.html', data=values, sum=sum, birthday=str(type(birthday)) + str(birthday))
 
 if __name__== "__main__":
     app.run(debug=True)
