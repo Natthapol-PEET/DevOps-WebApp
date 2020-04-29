@@ -19,10 +19,10 @@ body {
     <div class="span8">
       <div class="account pull-right">
         <ul class="user-menu">
-          <li style="color:black;font-size:22px"><a href="#">My Account</a></li>
-          <li style="color:black;font-size:22px"><a href="cart.html">Your Cart</a></li>
-          <li style="color:black;font-size:22px"><a href="checkout.html">Checkout</a></li>
-          <li style="color:black;font-size:22px"><a href="register.html">Login</a></li>
+				  <li style="color:black;font-size:22px"><a href="login">My Account</a></li>
+				  <li style="color:black;font-size:22px"><a href="cart">Your Cart</a></li>
+				  <li style="color:black;font-size:22px"><a href="summary">Summary</a></li>
+				  <li style="color:black;font-size:22px"><a href="login"><b>{{UserLogin}}</b></a></li>
         </ul>
       </div>
     </div>
@@ -31,7 +31,7 @@ body {
 <div id="wrapper" class="container">
   <section class="navbar main-menu">
     <div class="navbar-inner main-menu">
-      <a href="index.html" class="logo pull-left"><img src="static/images/logo.png" class="site_logo" alt=""></a>
+      <a href="index.html" class="logo pull-left"><img src="static/images/logocoff.PNG" class="site_logo" alt=""></a>
       <nav id="menu" class="pull-right">
         <ul>
           <li style="font-size:18px"><a href="./products.html"><font size="+1">กาแฟปั่น</font></a>
@@ -41,11 +41,11 @@ body {
               <li><a href="./products.html"><font size="+1">แอสเปรโช่ ปั่น</font></a></li>
             </ul>
           </li>
-          <li ><a href="./products.html"><font size="+1">กาแฟดำ</font></a></li>
-          <li ><a href="./products.html"><font size="+1">กาแฟนม</font></a>
-          </li>
-          <li ><a href="./products.html"><font size="+1">เครื่องดื่มปั่น</font></a></li>
-          <li ><a href="./products.html"><font size="+1">ขายดีที่สุด</font></a></li>
+          <li ><a href="."><font size="+1">กาแฟดำ</font></a></li>
+					<li ><a href="."><font size="+1">กาแฟนม</font></a>
+					</li>
+					<li ><a href="."><font size="+1">เครื่องดืมปั่น</font></a></li>
+					<li ><a href="."><font size="+1">ขายดีที่สุด</font></a></li>
         </ul>
 			</nav>
 		</div>
@@ -139,9 +139,11 @@ body {
 
 
 <!-- <h2>Login Form</h2> -->
-<form action="/show" method="post">
+{% if UserLogin == 'Login' %}
+<form action="/get_login" method="post">
   <div class="imgcontainer">
     <img src="static/images/login2.PNG" alt="Avatar" class="avatar">
+    <h3 style="color: red;">{{text}}</h3>
   </div>
 
   <div class="container">
@@ -165,6 +167,34 @@ body {
   </div>
 </form>
 
+{% else %}
+
+<div class="imgcontainer">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQeMhZACT5-ht707j-cZsy2-VdgAteD_AaIDTlDhywXOqf-pdtt&usqp=CAU" alt="Avatar" class="avatar">
+  </div>
+
+
+<div style="text-align: center;">
+    <h1><b>UID: </b> {{userdetail[0][0]}} </h1>
+    <h2><b>Name: </b> {{userdetail[0][1]}} </h2>
+    <h2><b>Address: </b> {{userdetail[0][2]}} </h2>
+    <h2><b>Phon number: </b> {{userdetail[0][3]}} </h2>
+</div>
+
+<br>
+
+
+<div style="margin: 0 auto; text-align: center">
+<form action="logout" method="post">
+    	<input type="hidden" name="logout" value="Login" />
+	<a href="javascript:;" onclick="parentNode.submit();" class="btn btn-primary">Logout !!</a>
+</form>
+</div>
+<br>
+
+
+
+{% endif %}
 
 	<section class="our_client">
 		<img src="static/coffeeimg/footer-bg.jpg" alt="" height="60" width="1700">
@@ -191,7 +221,7 @@ body {
 				</ul>
 			</div>
 			<div class="span5">
-				<p class="logo"><img src="static/images/logo.png" class="site_logo" alt=""></p>
+				<p class="logo"><img src="static/images/image_300.PNG" class="site_logo" alt=""></p>
 				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. the  Lorem Ipsum has been the industry's standard dummy text ever since the you.</p>
 				<br/>
 				<span class="social_icons">
@@ -220,6 +250,7 @@ body {
 <link rel="stylesheet" href="{{url_for('.static', filename='css/bootstrappage.css')}}">
 <link rel="stylesheet" href="{{url_for('.static', filename='css/flexslider.css')}}">
 <link rel="stylesheet" href="{{url_for('.static', filename='css/main.css')}}">
+<link rel="stylesheet" href="{{url_for('.static', filename='css/w3.css')}}">
 {% endblock %}
 
 {% block scripts %}
