@@ -117,7 +117,7 @@ def index():
 
 @app.route('/login')
 def login():
-    sql = " select uid, name, address, tel_user from user where uid = 'peet123' "
+    sql = " select uid, name, address, tel_user from user where uid = '"+UserLogin+"' "
     mycursor.execute(sql)
     userdetail = mycursor.fetchall()
     return render_template('login.html', UserLogin=UserLogin, userdetail=userdetail)
@@ -221,15 +221,98 @@ def product():
 
     return render_template('product_detail.html', data=data, data_info=myresult, UserLogin=UserLogin)
 
-@app.route('/cart')
+@app.route('/cart', methods=['GET'])
+def getcart():
+    # show cart_data
+    sqlC = "SELECT * FROM chart_data where uid='"+UserLogin+"' "
+    mycursor.execute(sqlC)
+    data_cart = mycursor.fetchall()
+
+    q = []
+    path_img = []
+    sdata = []
+    total = 0
+
+    if data_cart[0][0] != '':
+        for x in data_cart:
+            sql_1 = "SELECT prod_id, path_img, name, price FROM coffee_data where prod_id = '"+x[0]+"' "
+            mycursor.execute(sql_1)
+            show_data = mycursor.fetchall()
+            q = x[2]
+            path_img = array(show_data)
+            sdata.append( [path_img[0][0], path_img[0][1], path_img[0][2], q, path_img[0][3], float(path_img[0][3])*q] )
+            total += float(path_img[0][3])*q
+    else:
+        return render_template('show.html', UserLogin=UserLogin, text=data_cart)
+
+
+    return render_template('cart.html', UserLogin=UserLogin, data=sdata, total=total)
+
+@app.route('/cart', methods=['POST'])
 def cart():
     global PageIndex
     PageIndex = 1
 
-    return render_template('cart.html', UserLogin=UserLogin)
+    Qty = request.form.get("quantity")
+    id = request.form.get('id')
 
-@app.route('/invoice')
+    sql = "SELECT name, price, type, des, path_img FROM coffee_data where prod_id like '"+id+"' "
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall()
+    # total = int(Qty) * myresult[0][1]
+
+    sql = "SELECT quantity FROM chart_data WHERE prod_id='"+id+"' and uid='"+UserLogin+"'"
+    mycursor.execute(sql)
+    check = mycursor.fetchall()
+
+    # return render_template('show.html', text=array(check[0][0]))
+
+    if len(array(check)) == 0:
+        # insert data
+        sqlI = "INSERT INTO chart_data (prod_id, uid, quantity) VALUES ( %s , %s , %s ) "
+        val = (id, UserLogin, Qty)
+        mycursor.execute(sqlI,val)
+        mydb.commit()
+    else:
+        # update data
+        num = check[0][0] + int(Qty)
+        sql = "UPDATE chart_data SET quantity="+str(num)+" WHERE prod_id='"+id+"' and uid='"+UserLogin+"'"
+        mycursor.execute(sql)
+        mydb.commit()
+
+    # show cart_data
+
+    sqlC = "SELECT * FROM chart_data where uid='"+UserLogin+"' "
+    mycursor.execute(sqlC)
+    data_cart = mycursor.fetchall()
+
+    q = []
+    path_img = []
+    sdata = []
+    total = 0
+
+    if data_cart[0][0] != '':
+        for x in data_cart:
+            sql_1 = "SELECT prod_id, path_img, name, price FROM coffee_data where prod_id = '"+x[0]+"' "
+            mycursor.execute(sql_1)
+            show_data = mycursor.fetchall()
+            q = x[2]
+            path_img = array(show_data)
+            sdata.append( [path_img[0][0], path_img[0][1], path_img[0][2], q, path_img[0][3], float(path_img[0][3])*q] )
+            total += float(path_img[0][3])*q
+    else:
+        return render_template('show.html', UserLogin=UserLogin, text=data_cart)
+
+
+    return render_template('cart.html', UserLogin=UserLogin, data=sdata, total=total, text=check)
+
+@app.route('/invoice', methods=['POST'])
 def invoice():
+
+    global PageIndex
+    PageIndex = 1
+# select * from chart_data ch INNER JOIN coffee_data co 
+# where ch.uid="peet123" and co.prod_id=ch.prod_id;
 
     if UserLogin == 'peet123':
         customer_address = ["Mr.Nonthasri  Nonthasri",
@@ -267,8 +350,40 @@ def invoice():
 
     STAB = [875.00, 875.00, 0.00, 875.00]
 
-    global PageIndex
-    PageIndex = 1
+    # select chart to invoice
+    sql = " select ch.prod_id, quantity, name, des, price from chart_data ch INNER JOIN coffee_data co where ch.uid='"+UserLogin+"' and co.prod_id=ch.prod_id "
+    mycursor.execute(sql)
+    qch = mycursor.fetchall()
+
+    # ['2004' '4' 'Hot Cocoa' 'cocoa that make your morning better' '45']
+    pri, ttt = [], 0
+    for x in array(qch):
+        pri.append( int(x[1]) * float(x[4]) )
+    ttt = sum( pri )
+    return render_template('show.html', text=ttt)
+
+    # cal bill id
+    mycursor.execute("SELECT bill_id FROM bill")
+    myresult = mycursor.fetchall()
+    data = array(myresult)
+    bill_id = []
+    for x in data:
+        bill_id.append( int(x[0]) )
+    newBill = max(bill_id) + 1
+    newBill = '00' + str(newBill)
+    # return render_template('show.html', text=newBill)
+
+    # insert hist
+    sql = "INSERT INTO order_hist (date, prod_id, profit, user_id, bill_id) VALUES (CURRENT_TIMESTAMP, %s, %s, %s, %s)"
+    val = (prod-id, profit, UserLogin, newBill)
+    mycursor.execute(sql, val)
+    mydb.commit()
+
+    # insert bill
+    sql = "INSERT INTO bill (bill_id, balance) VALUES (%s, %s)"
+    val = (newBill, balance)
+    mycursor.execute(sql, val)
+    mydb.commit()
 
     return render_template('invoice.html', META=META, list_data=values, customer_address=customer_address, STAB=STAB, UserLogin=UserLogin)
 

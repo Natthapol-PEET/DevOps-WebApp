@@ -3,55 +3,55 @@
 {% block title %}product_detail{% endblock %}
 
 {% block content %}
-		<style>
-		body {
-		  background-image: url('https://image.freepik.com/free-photo/close-up-background-coffee-beans_23-2148349677.jpg');
-		}
-		</style>
-		<div id="top-bar" class="container">
-			<div class="row">
-				<div class="span4">
-					<form method="POST" class="search_form">
-						<input type="text" class="input-block-level search-query" Placeholder="eg. coffee">
-					</form>
-				</div>
-				<div class="span8">
-					<div class="account pull-right">
-						<ul class="user-menu">
-				  <li style="color:black;font-size:22px"><a href="login">My Account</a></li>
-				  <li style="color:black;font-size:22px"><a href="cart">Your Cart</a></li>
-				  <li style="color:black;font-size:22px"><a href="summary">Summary</a></li>
-				  <li style="color:black;font-size:22px"><a href="login"><b>{{UserLogin}}</b></a></li>
-						</ul>
-					</div>
+<style>
+	body {
+		background-image: url('https://image.freepik.com/free-photo/close-up-background-coffee-beans_23-2148349677.jpg');
+	}
+	</style>
+	<div id="top-bar" class="container">
+		<div class="row">
+			<div class="span4">
+				<form method="POST" class="search_form">
+					<input type="text" class="input-block-level search-query" Placeholder="eg. coffee">
+				</form>
+			</div>
+			<div class="span8">
+				<div class="account pull-right">
+					<ul class="user-menu">
+				<li style="color:black;font-size:22px"><a href="login">My Account</a></li>
+				<li style="color:black;font-size:22px"><a href="cart">Your Cart</a></li>
+				<li style="color:black;font-size:22px"><a href="summary">Summary</a></li>
+				<li style="color:black;font-size:22px"><a href="login"><b>{{UserLogin}}</b></a></li>
+					</ul>
 				</div>
 			</div>
 		</div>
-		<div id="wrapper" class="container">
-			<section class="navbar main-menu">
-				<div class="navbar-inner main-menu">
-					<a href="index.html" class="logo pull-left"><img src="static/images/logocoff.PNG" class="site_logo" alt=""></a>
-					<nav id="menu" class="pull-right">
-						<ul>
-							<li style="font-size:18px"><a href="./products.html"><font size="+1">กาแฟปั่น</font></a>
-								<ul >
-									<li><a href="./products.html"><font size="+1">คาปูชิโน่ ปั่น</font></a></li>
-									<li><a href="./products.html"><font size="+1">ม็อคค่า ปั่น</font></a></li>
-									<li><a href="./products.html"><font size="+1">แอสเปรโช่ ปั่น</font></a></li>
-								</ul>
-							</li>
-							<li ><a href="."><font size="+1">กาแฟดำ</font></a></li>
-					<li ><a href="."><font size="+1">กาแฟนม</font></a>
-					</li>
-					<li ><a href="."><font size="+1">เครื่องดืมปั่น</font></a></li>
-					<li ><a href="."><font size="+1">ขายดีที่สุด</font></a></li>
-					</nav>
-				</div>
-			</section>
-	<section class="header_text sub">
-	<img class="pageBanner" src="static/coffeeimg/banner.jpg" style="height:240px;" alt="New products" >
-		<h4><span>Product Detail</span></h4>
-	</section>
+	</div>
+	<div id="wrapper" class="container">
+		<section class="navbar main-menu">
+			<div class="navbar-inner main-menu">
+				<a href="index.html" class="logo pull-left"><img src="static/images/logocoff.PNG" class="site_logo" alt=""></a>
+				<nav id="menu" class="pull-right">
+					<ul>
+						<li style="font-size:18px"><a href="./products.html"><font size="+1">กาแฟปั่น</font></a>
+							<ul >
+								<li><a href="./products.html"><font size="+1">คาปูชิโน่ ปั่น</font></a></li>
+								<li><a href="./products.html"><font size="+1">ม็อคค่า ปั่น</font></a></li>
+								<li><a href="./products.html"><font size="+1">แอสเปรโช่ ปั่น</font></a></li>
+							</ul>
+						</li>
+						<li ><a href="."><font size="+1">กาแฟดำ</font></a></li>
+				<li ><a href="."><font size="+1">กาแฟนม</font></a>
+				</li>
+				<li ><a href="."><font size="+1">เครื่องดืมปั่น</font></a></li>
+				<li ><a href="."><font size="+1">ขายดีที่สุด</font></a></li>
+				</nav>
+			</div>
+		</section>
+<section class="header_text sub">
+<img class="pageBanner" src="static/coffeeimg/banner.jpg" style="height:240px;" alt="New products" >
+	<h4><span>Product Detail</span></h4>
+</section>
 	<section class="main-content">
 		<div class="row">
 			<div class="span9">
@@ -69,11 +69,12 @@
 						<h4><strong>ราคา: {{data_info[0][1]}}  บาท</strong></h4>
 					</div>
 					<div class="span5">
-						<form class="form-inline">
+						<form class="form-inline" action ="cart" method="POST">
 							<p>&nbsp;</p>
 							<label>Qty:</label>
-							<input type="text" class="span1" placeholder="1">
-							<button class="btn btn-inverse" type="submit">เพิ่มเข้าตะกร้า</button>
+                                                        <input type="number" id="quantity" name="quantity" min="1">
+							<input type="hidden" name="id" value={{data[0]}}>
+							<button class="btn btn-inverse" type="submit" value="submit">เพิ่มเข้าตะกร้า</button>
 						</form>
 					</div>
 				</div>
@@ -184,7 +185,7 @@
 									<li class="span3">
 										<div class="product-box">
 											<span class="sale_tag"></span>
-											<a href="product_detail.html"><img src="static/coffeeimg/smoothie/Green-smoothie.jpg" alt="" style="height:270px;" /></a></p>
+											<a href="product_detail.html"><img src="static/coffeeimg/smoothie/Green-Smoothie.jpg" alt="" style="height:270px;" /></a></p>
 											<a href="product_detail.html" class="title">ชาเขียว ปั่น</a><br/>
 											<a href="products.html" class="category">Green Tea Smoothie</a>
 											<p class="price">45 บาท</p>
@@ -281,7 +282,7 @@
 				</ul>
 			</div>
 			<div class="span5">
-				<p class="logo"><img src="static/images/image_300.PNG" class="site_logo" alt=""></p>
+				<p class="logo"><img src="static/images/logo.png" class="site_logo" alt=""></p>
 				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. the  Lorem Ipsum has been the industry's standard dummy text ever since the you.</p>
 				<br/>
 				<span class="social_icons">

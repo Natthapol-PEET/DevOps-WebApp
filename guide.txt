@@ -10,7 +10,7 @@ docker system prune -a
 
 
 
-
+docker login
 
 docker tag devopswebapp_web:latest natthapol593/dev-ops-webapp:devopswebapp_web
 docker tag mysql:5.7 natthapol593/dev-ops-webapp:mysql
