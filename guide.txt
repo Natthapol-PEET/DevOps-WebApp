@@ -1,0 +1,25 @@
+
+# mysql 
+mysql --host=127.0.0.1 --port=32000 -u root -p
+
+# stop all && remove all
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+
+docker system prune -a
+
+
+
+docker login
+
+docker tag devopswebapp_web:latest natthapol593/dev-ops-webapp:devopswebapp_web
+docker tag mysql:5.7 natthapol593/dev-ops-webapp:mysql
+docker tag python:3.7-alpine natthapol593/dev-ops-webapp:python3
+
+docker ps
+
+docker commit 6fd4be63277b natthapol593/dev-ops-webapp:webapp
+
+docker images
+
+docker push natthapol593/dev-ops-webapp:webapp

@@ -1,0 +1,276 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}COFFEE{% endblock %}
+
+
+{% block content %}
+<style>
+body {
+  background-image: url('https://image.freepik.com/free-photo/close-up-background-coffee-beans_23-2148349677.jpg');
+}
+</style>
+<div id="top-bar" class="container">
+  <div class="row">
+    <div class="span4">
+      <form method="POST" class="search_form">
+        <input type="text" class="input-block-level search-query" Placeholder="eg. coffee">
+      </form>
+    </div>
+    <div class="span8">
+      <div class="account pull-right">
+        <ul class="user-menu">
+				  <li style="color:black;font-size:22px"><a href="login">My Account</a></li>
+				  <li style="color:black;font-size:22px"><a href="cart">Your Cart</a></li>
+				  <li style="color:black;font-size:22px"><a href="summary">Summary</a></li>
+				  <li style="color:black;font-size:22px"><a href="login"><b>{{UserLogin}}</b></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="wrapper" class="container">
+  <section class="navbar main-menu">
+    <div class="navbar-inner main-menu">
+      <a href="index.html" class="logo pull-left"><img src="static/images/logocoff.PNG" class="site_logo" alt=""></a>
+      <nav id="menu" class="pull-right">
+        <ul>
+          <li style="font-size:18px"><a href="./products.html"><font size="+1">กาแฟปั่น</font></a>
+            <ul >
+              <li><a href="./products.html"><font size="+1">คาปูชิโน่ ปั่น</font></a></li>
+              <li><a href="./products.html"><font size="+1">ม็อคค่า ปั่น</font></a></li>
+              <li><a href="./products.html"><font size="+1">แอสเปรโช่ ปั่น</font></a></li>
+            </ul>
+          </li>
+          <li ><a href="."><font size="+1">กาแฟดำ</font></a></li>
+					<li ><a href="."><font size="+1">กาแฟนม</font></a>
+					</li>
+					<li ><a href="."><font size="+1">เครื่องดืมปั่น</font></a></li>
+					<li ><a href="."><font size="+1">ขายดีที่สุด</font></a></li>
+        </ul>
+			</nav>
+		</div>
+	</section>
+
+	<!-- <section class="homepage-slider" id="home-slider">
+		 <img src="https://cdn.jevelin.shufflehound.com/wp-content/uploads/2016/03/Title-img-1.jpg" width="1960" height="30" border="0" alt="กาแฟที่คุณมั่นใจ"></a>
+	 </a>
+	</section> -->
+
+
+  <style>
+    * { margin: 0; padding: 0; }
+    body { font: 14px/1.4 Georgia, serif; }
+    #page-wrap { width: 90%; margin: 0 auto; padding-top: 0;}
+
+    textarea { border: 0; font: 14px Georgia, Serif; overflow: hidden; resize: none; }
+    table { border-collapse: collapse; }
+    table td, table th { border: 1px solid black; padding: 5px; }
+
+    #header { height: 15px; width: 100%; margin: 20px 0; background: #222; text-align: center; color: white; font: bold 15px Helvetica, Sans-Serif; text-decoration: uppercase; letter-spacing: 20px; padding: 8px 0px; }
+
+    #address { width: 600px; height: 150px; float: left; font-size: 18px;}
+    #customer { overflow: hidden; }
+
+    #logo { text-align: right; float: right; position: relative; margin-top: 25px; border: 1px solid #fff; max-width: 540px; max-height: 100px; overflow: hidden; }
+    /* #logo:hover, #logo.edit { border: 1px solid #000; margin-top: 0px; max-height: 125px; } */
+    #logoctr { display: none; }
+    #logo:hover #logoctr, #logo.edit #logoctr { display: block; text-align: right; line-height: 25px; background: #eee; padding: 0 5px; }
+    #logohelp { text-align: left; display: none; font-style: italic; padding: 10px 5px;}
+    #logohelp input { margin-bottom: 5px; }
+    .edit #logohelp { display: block; }
+    .edit #save-logo, .edit #cancel-logo { display: inline; }
+    .edit #image, #save-logo, #cancel-logo, .edit #change-logo, .edit #delete-logo { display: none; }
+    #customer-title { font-size: 20px; /*font-weight: bold;*/ float: left; }
+    span.bbb {  font-weight: bold; }
+
+    .cent { text-align: center; }
+
+    #meta { margin-top: 1px; width: 300px; float: right; }
+    #meta td { text-align: right;  }
+    #meta td.meta-head { text-align: left; background: #eee; }
+    #meta td textarea { width: 100%; height: 20px; text-align: right; }
+
+    #items { clear: both; width: 100%; margin: 30px 0 0 0; border: 1px solid black; }
+    #items th { background: #eee; }
+    #items textarea { width: 80px; height: 50px; }
+    #items tr.item-row td { border: 0; vertical-align: top; }
+    #items td.description { width: 300px; }
+    #items td.item-name { width: 175px; }
+    #items td.description textarea, #items td.item-name textarea { width: 100%; }
+    #items td.total-line { border-right: 0; text-align: right; }
+    #items td.total-value { border-left: 0; padding: 10px; }
+    #items td.total-value textarea { height: 20px; background: none; }
+    #items td.balance { background: #eee; }
+    #items td.blank { border: 0; }
+
+    #terms { text-align: center; margin: 20px 0 0 0; }
+    #terms h5 { text-transform: uppercase; font: 13px Helvetica, Sans-Serif; letter-spacing: 10px; border-bottom: 1px solid black; padding: 0 0 8px 0; margin: 0 0 8px 0; }
+    #terms textarea { width: 100%; text-align: center;}
+
+    textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.total-value textarea:focus, .delete:hover { background-color:#EEFF88; }
+
+    .delete-wpr { position: relative; }
+    .delete { display: block; color: #000; text-decoration: none; position: absolute; background: #EEEEEE; font-weight: bold; padding: 0px 3px; border: 1px solid; top: -6px; left: -22px; font-family: Verdana; font-size: 12px; }
+</style>
+
+<div id="page-wrap">
+		<h1 id="header">INVOICE</h1>
+            <style>span.t{ padding-left: 6.3em }</style>
+            <p id="address">
+                <span class="bbb">Customer: &nbsp;</span>  {{customer_address[0]}} <br>
+                <span class="bbb">Address: &nbsp;&nbsp;</span> {{customer_address[1]}}
+                <br> <span class="t"></span> {{customer_address[2]}}
+                <br> <span class="t"></span> {{customer_address[3]}}
+                <br> <span class="t"></span> Phone number: {{customer_address[4]}}
+            </p>
+            <div id="logo">
+                <img id="image" src="static/images/image_300.PNG" alt="logo" />
+            </div>
+
+		<div style="clear:both"></div>
+        <hr width="50%">
+		<div id="customer">
+            <p id="customer-title">
+                <span class="bbb">Issuer: &nbsp;</span> Coffee Shop สาขามอกะเสด สกลนคร <br>
+                <span class="bbb">Tax ID: &nbsp;</span> 6040202424xxxx
+            </p>
+
+
+
+            <table id="meta">
+                <tr>
+                    <td class="meta-head">Invoice #</td>
+                    <td>{{META[0]}}</td>
+                </tr>
+                <tr>
+                    <td class="meta-head">Date</td>
+                    <td>{{META[1]}}</td>
+                </tr>
+                <tr>
+                    <td class="meta-head">Amount Due</td>
+                    <td>${{META[2]}}</td>
+                </tr>
+            </table>
+		</div>
+
+		<table id="items">
+		  <tr>
+		      <th>Item</th>
+		      <th>Description</th>
+		      <th>Unit Cost</th>
+		      <th>Quantity</th>
+		      <th>Price</th>
+		  </tr>
+
+      {% for x in list_data %}
+      <tr class="item-row">
+          <td class="item-name"> {{x[0]}} </td>
+		      <td class="description"><p> {{x[1]}} </p></td>
+		      <td class="cent">${{x[2]}} </td>
+		      <td class="cent"> {{x[3]}} </td>
+		      <td class="cent">${{x[4]}} </td>
+		  </tr>
+      {% endfor %}
+
+		  <tr>
+		    <td colspan="5"></td>
+		  </tr>
+
+		  <tr>
+		      <td colspan="2" class="blank"> </td>
+		      <td colspan="2" class="total-line">Subtotal</td>
+		      <td class="total-value"><div id="subtotal">${{STAB[0]}}</div></td>
+		  </tr>
+		  <tr>
+
+		      <td colspan="2" class="blank"> </td>
+		      <td colspan="2" class="total-line">Total</td>
+		      <td class="total-value"><div id="total">${{STAB[1]}}</div></td>
+		  </tr>
+		  <tr>
+		      <td colspan="2" class="blank"> </td>
+		      <td colspan="2" class="total-line">Amount Paid</td>
+
+		      <td class="total-value"><p id="paid">${{STAB[2]}}</p></td>
+		  </tr>
+		  <tr>
+		      <td colspan="2" class="blank"> </td>
+		      <td colspan="2" class="total-line balance">Balance Due</td>
+		      <td class="total-value balance"><div class="due">${{STAB[3]}}</div></td>
+		  </tr>
+
+		</table>
+
+		<div id="terms">
+		  <h5>Terms</h5>
+		  <p>NET 30 Days. Finance Charge of 1.5% will be made on unpaid balances after 30 days.</p>
+		</div>
+
+    </div>
+
+
+
+	<section class="our_client">
+		<img src="static/coffeeimg/footer-bg.jpg" alt="" height="60" width="1700">
+	</section>
+	<section id="footer-bar">
+		<div class="row">
+			<div class="span3">
+				<h4>Navigation</h4>
+				<ul class="nav">
+					<li><a href="./index.html">Homepage</a></li>
+					<li><a href="./about.html">About Us</a></li>
+					<li><a href="./contact.html">Contac Us</a></li>
+					<li><a href="./cart.html">Your Cart</a></li>
+					<li><a href="./register.html">Login</a></li>
+				</ul>
+			</div>
+			<div class="span4">
+				<h4>My Account</h4>
+				<ul class="nav">
+					<li><a href="#">My Account</a></li>
+					<li><a href="#">Order History</a></li>
+					<li><a href="#">Wish List</a></li>
+					<li><a href="#">Newsletter</a></li>
+				</ul>
+			</div>
+			<div class="span5">
+				<p class="logo"><img src="static/images/image_300.PNG" class="site_logo" alt=""></p>
+				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. the  Lorem Ipsum has been the industry's standard dummy text ever since the you.</p>
+				<br/>
+				<span class="social_icons">
+					<a class="facebook" href="#">Facebook</a>
+					<a class="twitter" href="#">Twitter</a>
+					<a class="skype" href="#">Skype</a>
+					<a class="vimeo" href="#">Vimeo</a>
+				</span>
+			</div>
+		</div>
+	</section>
+	<section id="copyright">
+		<span>Copyright 2013 bootstrappage template  All right reserved.</span>
+	</section>
+</div>
+
+
+
+
+
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{url_for('.static', filename='css/bootstrap.min.css')}}">
+<link rel="stylesheet" href="{{url_for('.static', filename='css/bootstrap-responsive.min.css')}}">
+<link rel="stylesheet" href="{{url_for('.static', filename='css/bootstrappage.css')}}">
+<link rel="stylesheet" href="{{url_for('.static', filename='css/flexslider.css')}}">
+<link rel="stylesheet" href="{{url_for('.static', filename='css/main.css')}}">
+{% endblock %}
+
+{% block scripts %}
+<script src="{{url_for('.static', filename='js/jquery-1.7.2.min.js')}}"></script>
+<script src="{{url_for('.static', filename='js/bootstrap.min.js')}}"></script>
+<script src="{{url_for('.static', filename='js/superfish.js')}}"></script>
+<script src="{{url_for('.static', filename='js/jquery.scrolltotop.js')}}"></script>
+{% endblock %}
+
+{% block html_attribs %} lang="en"{% endblock %}
