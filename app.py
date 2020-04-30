@@ -202,6 +202,38 @@ def get_login():
         return render_template('login.html', UserLogin=UserLogin, userdetail=userdetail)
 
     
+@app.route('/remove', methods=['POST'])
+def remove():
+
+    checkbox = request.form['ckeckbox']
+
+    sql = "DELETE FROM chart_data WHERE prod_id='"+checkbox+"' and uid='"+UserLogin+"'"
+    mycursor.execute(sql)
+    mydb.commit()
+
+    # show cart_data
+    sqlC = "SELECT * FROM chart_data where uid='"+UserLogin+"' "
+    mycursor.execute(sqlC)
+    data_cart = mycursor.fetchall()
+
+    q = []
+    path_img = []
+    sdata = []
+    total = 0
+
+    if data_cart[0][0] != '':
+        for x in data_cart:
+            sql_1 = "SELECT prod_id, path_img, name, price FROM coffee_data where prod_id = '"+x[0]+"' "
+            mycursor.execute(sql_1)
+            show_data = mycursor.fetchall()
+            q = x[2]
+            path_img = array(show_data)
+            sdata.append( [path_img[0][0], path_img[0][1], path_img[0][2], q, path_img[0][3], float(path_img[0][3])*q] )
+            total += float(path_img[0][3])*q
+    else:
+        return render_template('show.html', UserLogin=UserLogin, text=data_cart)
+
+    return render_template('cart.html', UserLogin=UserLogin, data=sdata, total=total)
 
 @app.route('/show')
 def get_login2():
@@ -350,18 +382,6 @@ def invoice():
 
     STAB = [875.00, 875.00, 0.00, 875.00]
 
-    # select chart to invoice
-    sql = " select ch.prod_id, quantity, name, des, price from chart_data ch INNER JOIN coffee_data co where ch.uid='"+UserLogin+"' and co.prod_id=ch.prod_id "
-    mycursor.execute(sql)
-    qch = mycursor.fetchall()
-
-    # ['2004' '4' 'Hot Cocoa' 'cocoa that make your morning better' '45']
-    pri, ttt = [], 0
-    for x in array(qch):
-        pri.append( int(x[1]) * float(x[4]) )
-    ttt = sum( pri )
-    return render_template('show.html', text=ttt)
-
     # cal bill id
     mycursor.execute("SELECT bill_id FROM bill")
     myresult = mycursor.fetchall()
@@ -373,17 +393,43 @@ def invoice():
     newBill = '00' + str(newBill)
     # return render_template('show.html', text=newBill)
 
-    # insert hist
-    sql = "INSERT INTO order_hist (date, prod_id, profit, user_id, bill_id) VALUES (CURRENT_TIMESTAMP, %s, %s, %s, %s)"
-    val = (prod-id, profit, UserLogin, newBill)
-    mycursor.execute(sql, val)
-    mydb.commit()
+    # select chart to invoice
+    sql = " select ch.prod_id, quantity, name, des, price from chart_data ch INNER JOIN coffee_data co where ch.uid='"+UserLogin+"' and co.prod_id=ch.prod_id "
+    mycursor.execute(sql)
+    qch = mycursor.fetchall()
+
+    # ['2004' '4' 'Hot Cocoa' 'cocoa that make your morning better' '45']
+    pri, balance, values = [], 0, []
+    for x in array(qch):
+        pri.append( int(x[1]) * float(x[4]) )
+
+        # return render_template('show.html', text=x[4])
+
+        # insert hist
+        sql = "INSERT INTO order_hist (date, prod_id, profit, user_id, bill_id) VALUES (CURRENT_TIMESTAMP, %s, %s, %s, %s)"
+        val = (str(x[0]), int(x[4]), UserLogin, newBill)
+        mycursor.execute(sql, val)
+        mydb.commit()
+
+        values.append( [x[2], x[3], int(x[4]), int(x[1]), int(x[4])] )
+
+    balance = sum( pri )
+    # return render_template('show.html', text=values)
 
     # insert bill
     sql = "INSERT INTO bill (bill_id, balance) VALUES (%s, %s)"
     val = (newBill, balance)
     mycursor.execute(sql, val)
     mydb.commit()
+
+
+    sql = " select date from order_hist where bill_id='"+newBill+"' "
+    mycursor.execute(sql)
+    dt = mycursor.fetchall()
+    # return render_template('show.html', text=array(dt[0][0]))
+
+    META = [newBill, array(dt[0][0]), balance]
+    STAB = [balance, balance, 0.00, balance]
 
     return render_template('invoice.html', META=META, list_data=values, customer_address=customer_address, STAB=STAB, UserLogin=UserLogin)
 
@@ -415,6 +461,8 @@ def logout():
     UserLogin = 'Login'
 
     return render_template('login.html', UserLogin=UserLogin)
+
+
 
 
 
